@@ -6,13 +6,14 @@
 
 const unsigned long RDM630_READ_WAIT_MS = 2000;
 
-class rdm630
+class RDM6300
 {
 public:
-  rdm630(byte yPinRx, byte yPinTx);
+  RDM6300(byte yPinRx, byte yPinTx);
   void begin();
   void listen();
   bool getData(byte *data, byte &length);
+  static String toHexString(byte *data, size_t length);
 
 private:
   typedef enum
