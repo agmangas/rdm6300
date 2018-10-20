@@ -1,28 +1,53 @@
 #include "rdm630.h"
 #include <string.h>
 
-rdm630::rdm630(byte yPinRx, byte yPinTx) : _rfid(yPinRx, yPinTx),
-                                           _state(WAITING_FOR_STX)
+RDM6300::RDM6300(byte yPinRx, byte yPinTx) : _rfid(yPinRx, yPinTx),
+                                             _state(WAITING_FOR_STX)
 {
 }
 
-void rdm630::begin()
+String RDM6300::toHexString(byte *data, size_t length)
+{
+    String ret = String("");
+    String zero;
+    String item;
+
+    for (int i = 0; i < length; i++)
+    {
+        item = String(data[i], HEX);
+
+        if (item.length() == 1)
+        {
+            zero = String("0");
+            zero.concat(item);
+            item = zero;
+        }
+
+        ret.concat(item);
+    }
+
+    ret.toUpperCase();
+
+    return ret;
+}
+
+void RDM6300::begin()
 {
     _rfid.begin(9600);
 }
 
-void rdm630::listen()
+void RDM6300::listen()
 {
     _rfid.listen();
 }
 
-void rdm630::reset()
+void RDM6300::reset()
 {
     memset(_data, 0, sizeof(_data));
     _state = WAITING_FOR_STX;
 }
 
-bool rdm630::getData(byte *data, byte &length)
+bool RDM6300::getData(byte *data, byte &length)
 {
     if (!_rfid.isListening())
     {
@@ -62,12 +87,12 @@ bool rdm630::getData(byte *data, byte &length)
     return true;
 }
 
-byte rdm630::asciiCharToNum(byte data)
+byte RDM6300::asciiCharToNum(byte data)
 {
     return (data > '9' ? data - '0' - 7 : data - '0');
 }
 
-rdm630::state rdm630::dataParser(state s, byte c)
+RDM6300::state RDM6300::dataParser(state s, byte c)
 {
     switch (s)
     {
