@@ -47,8 +47,10 @@ void RDM6300::reset()
     _state = WAITING_FOR_STX;
 }
 
-bool RDM6300::getData(byte *data, byte &length)
+String RDM6300::getTagId()
 {
+    String ret = String("");
+
     if (!_rfid.isListening())
     {
         listen();
@@ -76,15 +78,14 @@ bool RDM6300::getData(byte *data, byte &length)
 
     if (_state != DATA_VALID)
     {
-        return false;
+        return ret;
     }
 
-    length = sizeof(_data);
-    memcpy(data, _data, sizeof(_data));
+    ret = toHexString(_data, sizeof(_data));
 
     reset();
 
-    return true;
+    return ret;
 }
 
 byte RDM6300::asciiCharToNum(byte data)
