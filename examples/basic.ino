@@ -6,8 +6,7 @@ const byte DATA_SIZE = 6;
 
 RDM6300 rfid(RX_PIN, TX_PIN);
 
-byte data[DATA_SIZE];
-byte length;
+String tagId;
 
 void setup() {
   Serial.begin(9600);
@@ -16,10 +15,11 @@ void setup() {
 }
 
 void loop() {
-  Serial.println(">> Reading...");
+  tagId = rfid.getTagId();
 
-  if (rfid.getData(data, length)) {
-    Serial.print(">> Data: ");
-    Serial.println(RDM6300::toHexString(data, sizeof(data)));
+  if (tagId.length()) {
+    Serial.print(millis());
+    Serial.print(" :: Tag ID :: ");
+    Serial.println(tagId);
   }
 }
