@@ -4,7 +4,7 @@
 #include "Arduino.h"
 #include "SoftwareSerial.h"
 
-const unsigned long RDM630_READ_WAIT_MS = 2000;
+const unsigned long RDM630_READ_WAIT_MS = 1000;
 
 class RDM6300
 {
