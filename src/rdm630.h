@@ -12,7 +12,7 @@ public:
   RDM6300(byte yPinRx, byte yPinTx);
   void begin();
   void listen();
-  bool getData(byte *data, byte &length);
+  String getTagId();
   static String toHexString(byte *data, size_t length);
 
 private:
