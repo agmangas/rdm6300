@@ -2,7 +2,6 @@
 
 const byte RX_PIN = 2;
 const byte TX_PIN = 3;
-const byte DATA_SIZE = 6;
 
 RDM6300 rfid(RX_PIN, TX_PIN);
 
