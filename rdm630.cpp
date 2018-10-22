@@ -58,7 +58,8 @@ String RDM6300::getTagId()
 
     unsigned long ini = millis();
 
-    while (millis() < (ini + RDM630_READ_WAIT_MS))
+    while (millis() > ini &&
+           millis() < (ini + RDM630_READ_WAIT_MS))
     {
         while (_rfid.available() > 0)
         {
