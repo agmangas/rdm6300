@@ -4,6 +4,13 @@
 RDM6300::RDM6300(byte yPinRx, byte yPinTx) : _rfid(yPinRx, yPinTx),
                                              _state(WAITING_FOR_STX)
 {
+    _readWaitMs = RDM630_READ_WAIT_MS;
+}
+
+RDM6300::RDM6300(byte yPinRx, byte yPinTx, unsigned long readWaitMs) : _rfid(yPinRx, yPinTx),
+                                                                       _state(WAITING_FOR_STX),
+                                                                       _readWaitMs(readWaitMs)
+{
 }
 
 String RDM6300::toHexString(byte *data, size_t length)
@@ -57,7 +64,7 @@ String RDM6300::getTagId()
     }
 
     unsigned long ini = millis();
-    unsigned long end = ini + RDM630_READ_WAIT_MS;
+    unsigned long end = ini + _readWaitMs;
 
     while (millis() >= ini && millis() <= end)
     {

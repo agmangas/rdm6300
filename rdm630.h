@@ -10,6 +10,7 @@ class RDM6300
 {
 public:
   RDM6300(byte yPinRx, byte yPinTx);
+  RDM6300(byte yPinRx, byte yPinTx, unsigned long readWaitMs);
   void begin();
   void listen();
   String getTagId();
@@ -34,6 +35,7 @@ private:
   state _state;
   int _iNibbleCtr;
   byte _data[6];
+  unsigned long _readWaitMs;
 };
 
 #endif // RDM630_H
